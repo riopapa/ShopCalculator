@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,15 +18,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout linearLayout_views_list;
     String [] items;
     ArrayAdapter<String> itemAdapter;
-    ArrayList<String> itemArray, itemArrayNew;
+    ArrayList<String> itemArray;
     SharedPreferences sp;
 
     @Override
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Collections.addAll(itemArray, items);
         itemAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1
                 , itemArray);
-        for (int i = 0; i < 10; i++) addMoreLine();
+        for (int i = 0; i < 15; i++) addMoreLine();
         calculateSum();
     }
 
@@ -73,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(totPrice+" 원");
     }
 
-
     @Override
     public void onBackPressed() {
         for (int i=0; i<linearLayout_views_list.getChildCount(); i++) {
@@ -94,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
         }
         finish();
         finishAffinity();
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
 
     boolean checkAnyNew(String newItem) {
@@ -118,23 +116,35 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
+
         switch (item.getItemId()) {
             case R.id.add_Item:
                 addMoreLine();
                 addMoreLine();
+                break;
+            case R.id.check_Item:
+                finish();
+                Intent intent = new Intent(this, ItemDeleteActivity.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     void addMoreLine() {
+        int lnPos = linearLayout_views_list.getChildCount() % 3;
+        lnPos = 0xA4A4A4 + lnPos * 0xF0000 + lnPos * 0xF00 + lnPos * 15;
+        lnPos |= 0xff000000;
+//        Log.w("color",Integer.toHexString(lnPos));
         View shopView = getLayoutInflater().inflate(R.layout.shopping_list, null, false);
-
+        shopView.setBackgroundColor(lnPos);
 //        ImageView ivSearch = (ImageView) shopView.findViewById(R.id.search);
 //        ivSearch.setTag("-");
 //        EditText evName = shopView.findViewById(R.id.itemName);
+        linearLayout_views_list.addView(shopView);
+
         AutoCompleteTextView evName = (AutoCompleteTextView) shopView.findViewById(R.id.itemName);
+//        evName.setBackgroundColor(lnPos);
         evName.setAdapter(itemAdapter);
         evName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -144,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        linearLayout_views_list.addView(shopView);
         EditText evPrice = shopView.findViewById(R.id.itemPrice);
+//        evPrice.setBackgroundColor(lnPos);
         evPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
