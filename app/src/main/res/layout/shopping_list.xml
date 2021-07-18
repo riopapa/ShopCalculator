@@ -6,21 +6,40 @@
     android:layout_margin="4dp"
     android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/itemName"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_weight="8"
-        android:layout_height="28dp"
-        android:padding="2dp"
-        android:textSize="20sp"
-        android:inputType="text"
-        android:hint="상품" />
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        app:endIconMode="dropdown_menu">
+
+        <AutoCompleteTextView
+            android:id="@+id/itemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:completionHint="[상품명 입력 또는 선택]"
+            android:completionThreshold="1"
+            android:maxLength="8"
+            android:inputType="text"
+            android:hint="상품" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    <EditText-->
+<!--        android:id="@+id/itemName"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_weight="8"-->
+<!--        android:layout_height="32dp"-->
+<!--        android:padding="2dp"-->
+<!--        android:textSize="28sp"-->
+<!--        android:inputType="text"-->
+<!--        android:hint="상품" />-->
 
     <EditText
         android:id="@+id/itemPrice"
         android:layout_width="0dp"
         android:layout_weight="8"
-        android:layout_height="28dp"
+        android:layout_height="32dp"
         android:padding="2dp"
         android:textSize="20sp"
         android:inputType="number"
@@ -38,22 +57,6 @@
 
 </LinearLayout>
 
-<!--<com.google.android.material.textfield.TextInputLayout-->
-<!--style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--android:layout_width="0dp"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_weight="6"-->
-<!--app:endIconMode="dropdown_menu">-->
-
-<!--<AutoCompleteTextView-->
-<!--    android:id="@+id/editTextTeam"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:completionThreshold="1"-->
-<!--    android:paddingStart="8dp"-->
-<!--    android:inputType="text"-->
-<!--    android:hint="Team" />-->
-<!--</com.google.android.material.textfield.TextInputLayout>-->
 
 <!--<com.google.android.material.textfield.TextInputLayout-->
 <!--style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
