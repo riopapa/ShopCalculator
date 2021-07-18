@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="32dp"
+    android:layout_margin="4dp"
+    android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/itemName"
+        android:layout_width="0dp"
+        android:layout_weight="8"
+        android:layout_height="28dp"
+        android:padding="2dp"
+        android:textSize="20sp"
+        android:inputType="text"
+        android:hint="상품" />
+
+    <EditText
+        android:id="@+id/itemPrice"
+        android:layout_width="0dp"
+        android:layout_weight="8"
+        android:layout_height="28dp"
+        android:padding="2dp"
+        android:textSize="20sp"
+        android:inputType="number"
+        android:gravity="right"
+        android:hint="가격" />
+
+    <ImageView
+        android:id="@+id/addOrNot"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="28dp"
+        android:padding="2dp"
+        android:src="@mipmap/check_on"
+        />
+
+</LinearLayout>
+
+<!--<com.google.android.material.textfield.TextInputLayout-->
+<!--style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_weight="6"-->
+<!--app:endIconMode="dropdown_menu">-->
+
+<!--<AutoCompleteTextView-->
+<!--    android:id="@+id/editTextTeam"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:completionThreshold="1"-->
+<!--    android:paddingStart="8dp"-->
+<!--    android:inputType="text"-->
+<!--    android:hint="Team" />-->
+<!--</com.google.android.material.textfield.TextInputLayout>-->
+
+<!--<com.google.android.material.textfield.TextInputLayout-->
+<!--style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_margin="0dp"-->
+<!--android:layout_weight="16"-->
+<!--app:endIconMode="clear_text">-->
+
+<!--<AutoCompleteTextView-->
+<!--    android:id="@+id/itemName"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="32dp"-->
+<!--    android:padding="2dp"-->
+<!--    android:textSize="16sp"-->
+<!--    android:inputType="text"-->
+<!--    android:hint="상품" />-->
+<!--</com.google.android.material.textfield.TextInputLayout>-->
+
+<!--<com.google.android.material.textfield.TextInputLayout-->
+<!--style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_margin="0dp"-->
+<!--android:layout_weight="12"-->
+<!--app:endIconMode="clear_text">-->
+
+<!--<AutoCompleteTextView-->
+<!--    android:id="@+id/itemPrice"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="32dp"-->
+<!--    android:padding="2dp"-->
+<!--    android:textSize="16sp"-->
+<!--    android:gravity="end|center_vertical"-->
+<!--    android:inputType="numberSigned"-->
+<!--    android:hint="가격" />-->
+<!--</com.google.android.material.textfield.TextInputLayout>-->
