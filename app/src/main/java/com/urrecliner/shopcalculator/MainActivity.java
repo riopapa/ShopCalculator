@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,20 +55,25 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     private void calculateSum() {
-        int totPrice = 0;
+        int grp1Price = 0, grp2Price = 0;
         for (int i=0; i<linearLayout_views_list.getChildCount(); i++) {
             View view = linearLayout_views_list.getChildAt(i);
             ImageView iv = view.findViewById(R.id.addOrNot);
-            EditText tvPrice = view.findViewById(R.id.itemPrice);
-            String tag = iv.getTag().toString();
+            String addTag = iv.getTag().toString();
+            ImageView grpV = view.findViewById(R.id.itemGrp);
+            String grpTag = grpV.getTag().toString();
 //            Log.w("i="+i, "name="+tvName.getText().toString()+" price="+tvPrice.getText().toString()+" flag="+tag);
-            if (tag.equals("+")) {
+            EditText tvPrice = view.findViewById(R.id.itemPrice);
+            if (addTag.equals("+")) {
                 int price = Integer.parseInt("0" + tvPrice.getText().toString());
-                totPrice += price;
+                if (grpTag.equals("1"))
+                    grp1Price += price;
+                else
+                    grp2Price += price;
             }
         }
-        TextView tv = findViewById(R.id.sumValue);
-        tv.setText(totPrice+" 원");
+        TextView tv1 = findViewById(R.id.sumValue1);tv1.setText(grp1Price+"원");
+        TextView tv2 = findViewById(R.id.sumValue2);tv2.setText(grp2Price+"원");
     }
 
     @Override
@@ -133,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
     void addMoreLine() {
         int lnPos = linearLayout_views_list.getChildCount() % 3;
-        lnPos = 0xA4A4A4 + lnPos * 0xF0000 + lnPos * 0xF00 + lnPos * 15;
+        lnPos = 0x343454 + lnPos * 0x1F0000 + lnPos * 0x1F00 + lnPos * 0x2F;
         lnPos |= 0xff000000;
 //        Log.w("color",Integer.toHexString(lnPos));
         View shopView = getLayoutInflater().inflate(R.layout.shopping_list, null, false);
@@ -142,6 +146,25 @@ public class MainActivity extends AppCompatActivity {
 //        ivSearch.setTag("-");
 //        EditText evName = shopView.findViewById(R.id.itemName);
         linearLayout_views_list.addView(shopView);
+
+        ImageView ivGrp = (ImageView) shopView.findViewById(R.id.itemGrp);
+        ivGrp.setTag("1");
+        ivGrp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tag = v.getTag().toString();
+                if (tag.equals("1")) {
+                    v.setTag("2");
+                    ivGrp.setImageResource(R.mipmap.two);
+                } else {
+                    v.setTag("1");
+                    ivGrp.setImageResource(R.mipmap.one);
+                }
+                calculateSum();
+//              inearLayout_views_list.removeView(shopView);
+            }
+        });
+
 
         AutoCompleteTextView evName = (AutoCompleteTextView) shopView.findViewById(R.id.itemName);
 //        evName.setBackgroundColor(lnPos);

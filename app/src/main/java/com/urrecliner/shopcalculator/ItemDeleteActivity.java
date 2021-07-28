@@ -25,6 +25,7 @@ public class ItemDeleteActivity extends AppCompatActivity {
     ArrayList<String> itemArray;
     static CheckAdapter checkAdapter;
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,20 @@ public class ItemDeleteActivity extends AppCompatActivity {
         Collections.addAll(itemArray, items);
         checkAdapter = new CheckAdapter();
         recyclerView.setAdapter(checkAdapter);
+    }
 
+    @Override
+    public void onBackPressed() {
+        StringBuilder sb = new StringBuilder();
+        for (String s: itemArray)
+            if (s.length() > 0) sb.append(s).append(";");
+        SharedPreferences.Editor se = sp.edit();
+        se.putString("items",sb.toString());
+        se.apply();
+        se.commit();
+        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     class CheckAdapter extends RecyclerView.Adapter<CheckAdapter.ViewHolder> {
@@ -64,7 +78,7 @@ public class ItemDeleteActivity extends AppCompatActivity {
                         int pos = getAdapterPosition();
                         itemArray.remove(pos);
                         checkAdapter.notifyDataSetChanged();
-                        Toast.makeText(context, "상품 ["+itemArray.get(pos)+"] 삭제 됨", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "상품 ["+itemArray.get(pos)+"] 삭제 됨", Toast.LENGTH_LONG).show();
                         return false;
                     }
                 });
@@ -73,7 +87,6 @@ public class ItemDeleteActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
-
             holder.tv.setText(itemArray.get(position));
         }
 
@@ -81,19 +94,6 @@ public class ItemDeleteActivity extends AppCompatActivity {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.check_items, parent, false);
             return new ViewHolder(view);
         }
-    }
-    @Override
-    public void onBackPressed() {
-        StringBuilder sb = new StringBuilder();
-        for (String s: itemArray)
-            if (s.length() > 0) sb.append(s).append(";");
-        SharedPreferences.Editor se = sp.edit();
-        se.putString("items",sb.toString());
-        se.apply();
-        se.commit();
-        finish();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
 }
