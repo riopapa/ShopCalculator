@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/check_Item"
+        android:id="@+id/erase"
         android:orderInCategory="100"
-        android:icon="@mipmap/checklist"
+        android:icon="@mipmap/eraser"
         app:showAsAction="always"
         android:title="Add Item" />
 
@@ -13,6 +13,20 @@
         android:id="@+id/add_Item"
         android:orderInCategory="100"
         android:icon="@mipmap/add_line"
+        app:showAsAction="always"
+        android:title="Add Item" />
+
+    <item
+        android:id="@+id/sort"
+        android:orderInCategory="100"
+        android:icon="@mipmap/sort"
+        app:showAsAction="always"
+        android:title="Add Item" />
+
+    <item
+        android:id="@+id/check_Item"
+        android:orderInCategory="100"
+        android:icon="@mipmap/checklist"
         app:showAsAction="always"
         android:title="Add Item" />
 

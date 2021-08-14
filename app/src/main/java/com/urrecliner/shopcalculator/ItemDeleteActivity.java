@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,8 @@ import java.util.Collections;
 public class ItemDeleteActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    SharedPreferences sp;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor prefsEditor;
     ArrayList<String> itemArray;
     static CheckAdapter checkAdapter;
     Context context;
@@ -36,8 +36,9 @@ public class ItemDeleteActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(SGL);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, SGL.getOrientation()));
         recyclerView.setLayoutManager(SGL);
-        sp = this.getSharedPreferences("items",MODE_PRIVATE);
-        String itemList = sp.getString("items","");
+        sharedPref = getApplicationContext().getSharedPreferences("shop", MODE_PRIVATE);
+        prefsEditor = sharedPref.edit();
+        String itemList = sharedPref.getString("items","");
         String []items = itemList.split(";");
         itemArray = new ArrayList<>();
         Collections.addAll(itemArray, items);
@@ -50,10 +51,9 @@ public class ItemDeleteActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
         for (String s: itemArray)
             if (s.length() > 0) sb.append(s).append(";");
-        SharedPreferences.Editor se = sp.edit();
-        se.putString("items",sb.toString());
-        se.apply();
-        se.commit();
+        prefsEditor.putString("items",sb.toString());
+        prefsEditor.apply();
+        prefsEditor.commit();
         finish();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -72,15 +72,14 @@ public class ItemDeleteActivity extends AppCompatActivity {
             ViewHolder(final View itemView) {
                 super(itemView);
                 tv = itemView.findViewById(R.id.checkItem);
-                tv.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        int pos = getAdapterPosition();
-                        itemArray.remove(pos);
-                        checkAdapter.notifyDataSetChanged();
-                        Toast.makeText(context, "상품 ["+itemArray.get(pos)+"] 삭제 됨", Toast.LENGTH_LONG).show();
-                        return false;
-                    }
+                tv.setOnLongClickListener(v -> {
+                    int pos = getAbsoluteAdapterPosition();
+                    Toast.makeText(context, "상품 ["+itemArray.get(pos)+"] 삭제 됨", Toast.LENGTH_LONG).show();
+                    itemArray.remove(pos);
+                    checkAdapter.notifyDataSetChanged();
+//                    Intent intent = new Intent(getApplicationContext(), ItemDeleteActivity.class);
+//                    startActivity(intent);
+                    return true;
                 });
             }
         }

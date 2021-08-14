@@ -37,7 +37,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
-        android:id="@+id/itemPrice"
+        android:id="@+id/itemCost"
         android:layout_width="0dp"
         android:layout_weight="8"
         android:layout_height="32dp"
