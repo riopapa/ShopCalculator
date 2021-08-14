@@ -95,9 +95,11 @@ public class MainActivity extends AppCompatActivity {
             if (shopItem.shopAddTag.equals("+")) {
                 addOrNotIV.setTag("+");
                 addOrNotIV.setImageResource(R.mipmap.check_on);
+                costET.setTextColor(0xFFFFFF00);
             } else {
                 addOrNotIV.setTag("-");
                 addOrNotIV.setImageResource(R.mipmap.check_off);
+                costET.setTextColor(0xCC92C49C);
             }
         }
     }
@@ -250,9 +252,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        EditText evPrice = shopView.findViewById(R.id.itemCost);
+        EditText evCost = shopView.findViewById(R.id.itemCost);
 //        evPrice.setBackgroundColor(lnPos);
-        evPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        evCost.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus)
@@ -268,9 +270,11 @@ public class MainActivity extends AppCompatActivity {
                 String tag = v.getTag().toString();
                 if (tag.equals("+")) {
                     v.setTag("-");
+                    evCost.setTextColor(0xCC92C49C);
                     ivAddorNot.setImageResource(R.mipmap.check_off);
                 } else {
                     v.setTag("+");
+                    evCost.setTextColor(0xFFFFFF00);
                     ivAddorNot.setImageResource(R.mipmap.check_on);
                 }
                 calculateSum();

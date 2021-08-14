@@ -3,17 +3,20 @@ package com.urrecliner.shopcalculator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -32,10 +35,12 @@ public class ItemDeleteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_checklist);
         recyclerView = findViewById(R.id.recycleView);
         context = this;
-        StaggeredGridLayoutManager SGL = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(SGL);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, SGL.getOrientation()));
-        recyclerView.setLayoutManager(SGL);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
+        recyclerView.setLayoutManager(gridLayoutManager);
+//        StaggeredGridLayoutManager SGL = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(SGL);
+//        recyclerView.addItemDecoration(new DividerItemDecoration(this, SGL.getOrientation()));
+//        recyclerView.setLayoutManager(SGL);
         sharedPref = getApplicationContext().getSharedPreferences("shop", MODE_PRIVATE);
         prefsEditor = sharedPref.edit();
         String itemList = sharedPref.getString("items","");
@@ -44,6 +49,9 @@ public class ItemDeleteActivity extends AppCompatActivity {
         Collections.addAll(itemArray, items);
         checkAdapter = new CheckAdapter();
         recyclerView.setAdapter(checkAdapter);
+        ActionBar actionBar = this.getSupportActionBar();
+            actionBar.setTitle("Shop Calc");
+            actionBar.setSubtitle("삭제할 항목 길게 누르기");
     }
 
     @Override
@@ -79,7 +87,8 @@ public class ItemDeleteActivity extends AppCompatActivity {
                     checkAdapter.notifyDataSetChanged();
 //                    Intent intent = new Intent(getApplicationContext(), ItemDeleteActivity.class);
 //                    startActivity(intent);
-                    return true;
+//                    return true;
+                    return false;
                 });
             }
         }
@@ -90,7 +99,7 @@ public class ItemDeleteActivity extends AppCompatActivity {
         }
 
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.check_items, parent, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.check_item, parent, false);
             return new ViewHolder(view);
         }
     }
