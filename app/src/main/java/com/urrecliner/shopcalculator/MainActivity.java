@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         String itemList = sharedPref.getString("items","감자;건빵;견과;계란;고추장;깐마늘;나또;납작귀리;납작만두;누룽지;도시락김;두부;등갈비;땅콩;라텍스 장갑;락스;로션;마그네슙;매운고추;메밀국수;멸치;모닝롤;몽고간장;무;물;물만두;물만두;물비누;미역줄기;발사믹;비타민 디;빠다;새송이버섯;새우;새우완탕;스킨;스킨;시리얼;식초;쌀;쌀국수;아르헨티나 새우;아보카도;아보카도 오일;양배추;양파;어묵;오메가3;오분도미;오이고추;올리브유;우루오스;우유;인절미 과자;장조림고기;정수기필터;차돌박이;청양고추;카무트;커피캡슐;콩나물;포도;해물쌀국수;해초샐러드;햄프시드;황태채;휴지"
 );
         items = itemList.split(";");
-        itemArray = new ArrayList<String>();
+        itemArray = new ArrayList<>();
         Collections.addAll(itemArray, items);
-        itemAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1
+        itemAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1
                 , itemArray);
         for (int i = 0; i < 30; i++) addMoreLine();
         getShoppingItems();
@@ -285,15 +285,20 @@ public class MainActivity extends AppCompatActivity {
 
     void getShoppingItems() {
 
+//        Gson gson = new Gson();
+//        String json = sharedPref.getString("shop", "");
+//        if (json.isEmpty()) {
+//            shopItems = new ArrayList<>();
+//        } else {
+//            Type type = new TypeToken<List<ShopItem>>() {
+//            }.getType();
+//            shopItems = gson.fromJson(json, type);
+//        }
         Gson gson = new Gson();
-        String json = sharedPref.getString("shop", "");
-        if (json.isEmpty()) {
+        shopItems = gson.fromJson(sharedPref.getString("shop", ""),
+                new TypeToken<List<ShopItem>>() {}.getType());
+        if (shopItems == null)
             shopItems = new ArrayList<>();
-        } else {
-            Type type = new TypeToken<List<ShopItem>>() {
-            }.getType();
-            shopItems = gson.fromJson(json, type);
-        }
     }
 
     void putShoppingItems() {
