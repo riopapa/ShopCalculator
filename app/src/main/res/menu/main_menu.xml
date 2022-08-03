@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/reload"
+        android:orderInCategory="100"
+        android:icon="@drawable/reload"
+        app:showAsAction="always"
+        android:title="Add Item" />
+
+    <item
         android:id="@+id/erase"
         android:orderInCategory="100"
         android:icon="@mipmap/eraser"
@@ -12,22 +19,22 @@
     <item
         android:id="@+id/add_Item"
         android:orderInCategory="100"
-        android:icon="@mipmap/add_line"
+        android:icon="@drawable/lines_add"
         app:showAsAction="always"
-        android:title="Add Item" />
+        android:title="Add Item Line" />
 
     <item
         android:id="@+id/sort"
         android:orderInCategory="100"
-        android:icon="@mipmap/sort"
+        android:icon="@drawable/sort"
         app:showAsAction="always"
-        android:title="Add Item" />
+        android:title="Sort List" />
 
     <item
         android:id="@+id/check_Item"
         android:orderInCategory="100"
-        android:icon="@mipmap/checklist"
+        android:icon="@drawable/item_list"
         app:showAsAction="always"
-        android:title="Add Item" />
+        android:title="Add/Delete Items" />
 
 </menu>

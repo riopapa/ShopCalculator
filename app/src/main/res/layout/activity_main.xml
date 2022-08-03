@@ -14,7 +14,7 @@
         android:padding="2dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/sumValue1"
-        android:src="@mipmap/one"
+        android:src="@drawable/one"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -35,7 +35,7 @@
         android:padding="2dp"
         app:layout_constraintLeft_toRightOf="@id/sumValue1"
         app:layout_constraintRight_toLeftOf="@id/sumValue2"
-        android:src="@mipmap/two"
+        android:src="@drawable/two"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

@@ -13,7 +13,7 @@
         android:layout_height="28dp"
         android:layout_marginTop="16dp"
         android:padding="2dp"
-        android:src="@mipmap/one"
+        android:src="@drawable/one"
         />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -32,6 +32,7 @@
             android:completionThreshold="1"
             android:maxLength="10"
             android:textColor="#ffffff"
+            android:backgroundTint="@android:color/transparent"
             android:inputType="text"
             android:hint="상품" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -39,11 +40,12 @@
     <EditText
         android:id="@+id/itemCost"
         android:layout_width="0dp"
-        android:layout_weight="8"
+        android:layout_weight="5"
         android:layout_height="32dp"
         android:padding="2dp"
         android:textSize="20sp"
         android:textColor="#ffffff"
+        android:backgroundTint="@android:color/transparent"
         android:inputType="number"
         android:gravity="right"
         android:hint="가격" />

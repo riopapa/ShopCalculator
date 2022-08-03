@@ -1,7 +1,5 @@
 package com.urrecliner.shopcalculator;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,10 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +25,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout linearLayout_views_list;
-    String [] items;
     ArrayAdapter<String> itemAdapter;
     ArrayList<String> itemArray;
     SharedPreferences sharedPref;
@@ -40,9 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int compareTo(ShopItem o) {
-            String s0 = shopGrp + shopName;
-            String s1 = o.shopGrp + o.shopName;
-            return (s0.compareTo(s1));
+            return ((shopGrp + shopName).compareTo(o.shopGrp + o.shopName));
         }
     }
 
@@ -53,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
         linearLayout_views_list = findViewById(R.id.linearLayout_views_list);
         sharedPref = getApplicationContext().getSharedPreferences("shop", MODE_PRIVATE);
         prefsEditor = sharedPref.edit();
+        reload_shopList();
+    }
+
+    private void reload_shopList() {
         String itemList = sharedPref.getString("items","감자;건빵;견과;계란;고추장;깐마늘;나또;납작귀리;납작만두;누룽지;도시락김;두부;등갈비;땅콩;라텍스 장갑;락스;로션;마그네슙;매운고추;메밀국수;멸치;모닝롤;몽고간장;무;물;물만두;물만두;물비누;미역줄기;발사믹;비타민 디;빠다;새송이버섯;새우;새우완탕;스킨;스킨;시리얼;식초;쌀;쌀국수;아르헨티나 새우;아보카도;아보카도 오일;양배추;양파;어묵;오메가3;오분도미;오이고추;올리브유;우루오스;우유;인절미 과자;장조림고기;정수기필터;차돌박이;청양고추;카무트;커피캡슐;콩나물;포도;해물쌀국수;해초샐러드;햄프시드;황태채;휴지"
 );
-        items = itemList.split(";");
         itemArray = new ArrayList<>();
-        Collections.addAll(itemArray, items);
+        Collections.addAll(itemArray, itemList.split(";"));
         itemAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1
                 , itemArray);
         for (int i = 0; i < 30; i++) addMoreLine();
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             EditText costET = view.findViewById(R.id.itemCost);
             ShopItem shopItem = shopItems.get(i);
 
-            groupIV.setImageResource((shopItem.shopGrp.equals("1")? R.mipmap.one : R.mipmap.two));
+            groupIV.setImageResource((shopItem.shopGrp.equals("1")? R.drawable.one : R.drawable.two));
             groupIV.setTag(shopItem.shopGrp);
             txtV.setText(shopItem.shopName);
             costET.setText(""+shopItem.shopCost);
@@ -115,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
             AutoCompleteTextView txtV = view.findViewById(R.id.itemName);
             String itemName = txtV.getText().toString();
             String grpTag = grpV.getTag().toString();
-//            Log.w("i="+i, "name="+tvName.getText().toString()+" price="+tvPrice.getText().toString()+" flag="+tag);
             EditText tvPrice = view.findViewById(R.id.itemCost);
             int cost = Integer.parseInt("0" + tvPrice.getText().toString());
             if (cost > 0) {
@@ -182,30 +180,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.add_Item:
-                addMoreLine(); addMoreLine(); addMoreLine();
-                addMoreLine(); addMoreLine(); addMoreLine();
-                break;
-            case R.id.check_Item:
-                finish();
-                Intent intent = new Intent(this, ItemDeleteActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.erase:
-                shopItems = new ArrayList<>();
-                putShoppingItems();
-                finish();
-                Intent newStart = new Intent(this, MainActivity.class);
-                startActivity(newStart);
-                break;
-            case R.id.sort:
-                Collections.sort(shopItems);
-                putShoppingItems();
-                finish();
-                Intent sorted = new Intent(this, MainActivity.class);
-                startActivity(sorted);
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.add_Item) {
+            for (int i = 0; i < 5; i++)
+                addMoreLine();
+
+        } else if (itemId == R.id.check_Item) {
+            Intent intent = new Intent(this, ItemDeleteActivity.class);
+            startActivity(intent);
+
+        } else if (itemId == R.id.erase) {
+            shopItems = new ArrayList<>();
+            putShoppingItems();
+            finish();
+            Intent newStart = new Intent(this, MainActivity.class);
+            startActivity(newStart);
+
+        } else if (itemId == R.id.reload) {
+            reload_shopList();
+
+        } else if (itemId == R.id.sort) {
+            Collections.sort(shopItems);
+            putShoppingItems();
+            finish();
+            Intent sorted = new Intent(this, MainActivity.class);
+            startActivity(sorted);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -224,42 +223,33 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView ivGrp = (ImageView) shopView.findViewById(R.id.itemGrp);
         ivGrp.setTag("1");
-        ivGrp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String tag = v.getTag().toString();
-                if (tag.equals("1")) {
-                    v.setTag("2");
-                    ivGrp.setImageResource(R.mipmap.two);
-                } else {
-                    v.setTag("1");
-                    ivGrp.setImageResource(R.mipmap.one);
-                }
-                calculateSum();
-//              inearLayout_views_list.removeView(shopView);
+        ivGrp.setOnClickListener(v -> {
+            String tag = v.getTag().toString();
+            if (tag.equals("1")) {
+                v.setTag("2");
+                ivGrp.setImageResource(R.drawable.two);
+            } else {
+                v.setTag("1");
+                ivGrp.setImageResource(R.drawable.one);
             }
+            calculateSum();
+//              inearLayout_views_list.removeView(shopView);
         });
 
 
         AutoCompleteTextView evName = (AutoCompleteTextView) shopView.findViewById(R.id.itemName);
 //        evName.setBackgroundColor(lnPos);
         evName.setAdapter(itemAdapter);
-        evName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus)
-                    calculateSum();
-            }
+        evName.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus)
+                calculateSum();
         });
 
         EditText evCost = shopView.findViewById(R.id.itemCost);
 //        evPrice.setBackgroundColor(lnPos);
-        evCost.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus)
-                    calculateSum();
-            }
+        evCost.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus)
+                calculateSum();
         });
 
         ImageView ivAddorNot = (ImageView) shopView.findViewById(R.id.addOrNot);
