@@ -93,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
             costET.setText(""+shopItem.shopCost);
             if (shopItem.shopAddTag.equals("+")) {
                 addOrNotIV.setTag("+");
-                addOrNotIV.setImageResource(R.mipmap.check_on);
+                addOrNotIV.setImageResource(R.drawable.check_on);
                 costET.setTextColor(0xFFFFFF00);
             } else {
                 addOrNotIV.setTag("-");
-                addOrNotIV.setImageResource(R.mipmap.check_off);
+                addOrNotIV.setImageResource(R.drawable.check_off);
                 costET.setTextColor(0xCC92C49C);
             }
         }
@@ -261,11 +261,11 @@ public class MainActivity extends AppCompatActivity {
                 if (tag.equals("+")) {
                     v.setTag("-");
                     evCost.setTextColor(0xCC92C49C);
-                    ivAddorNot.setImageResource(R.mipmap.check_off);
+                    ivAddorNot.setImageResource(R.drawable.check_off);
                 } else {
                     v.setTag("+");
                     evCost.setTextColor(0xFFFFFF00);
-                    ivAddorNot.setImageResource(R.mipmap.check_on);
+                    ivAddorNot.setImageResource(R.drawable.check_on);
                 }
                 calculateSum();
 //              inearLayout_views_list.removeView(shopView);

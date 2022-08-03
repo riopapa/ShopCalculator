@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/@ANDROID/ShopCalculator/app/src/main/res/drawable/check_off.xml" value="0.172" />
+        <entry key="..\:/@ANDROID/ShopCalculator/app/src/main/res/drawable/check_on.xml" value="0.172" />
         <entry key="..\:/@ANDROID/ShopCalculator/app/src/main/res/drawable/item_list.xml" value="0.172" />
         <entry key="..\:/@ANDROID/ShopCalculator/app/src/main/res/drawable/lines_add.xml" value="0.172" />
         <entry key="..\:/@ANDROID/ShopCalculator/app/src/main/res/drawable/one.xml" value="0.1275" />
